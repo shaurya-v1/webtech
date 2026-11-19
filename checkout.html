@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>BookMyTable - Checkout</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body onload="calculateBill()">
+        <header>
+            <h1>BookMyTable</h1>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">Login</a></li>
+                <li><a href="reserve.html">Reserve Table</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="checkout.html">Checkout</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <section>
+                <h2 class="center-text">Bill Details</h2>
+
+                <fieldset>
+                    <legend>Add-ons & Offers</legend>
+                    <p>
+                        <input
+                            type="checkbox"
+                            id="mayo"
+                            onchange="calculateBill()"
+                        />
+                        <label for="mayo">Extra Sauce (+ Rs 50.00)</label>
+                    </p>
+                    <p>
+                        <input
+                            type="checkbox"
+                            id="coupon"
+                            onchange="calculateBill()"
+                        />
+                        <label for="coupon"
+                            >Apply Coupon Offer (- Rs 150.00)</label
+                        >
+                    </p>
+                </fieldset>
+
+                <div class="summary-box">
+                    <h3>Order Summary</h3>
+                    <div id="orderLines"></div>
+                    <p id="subtotalText">Subtotal: Rs 0.00</p>
+                    <p id="gstText">GST (10%): Rs 0.00</p>
+                    <h3 id="totalText">Total Payable: Rs 0.00</h3>
+
+                    <button type="button" class="btn" onclick="placeOrder()">
+                        Confirm & Pay
+                    </button>
+                </div>
+
+                <div id="thankYouBox" class="summary-box" style="display: none">
+                    <h2>THANK YOU!</h2>
+                    <p>Your table and food order have been confirmed.</p>
+                    <label>Generating Receipt:</label><br />
+                    <progress></progress><br /><br />
+                    <a href="index.html" class="btn">Back to Home</a>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>© 2026 BookMyTable. All rights reserved.</p>
+        </footer>
+
+        <script>
+            function getQueryValue(paramName) {
+                const query = window.location.search.substring(1);
+                const parts = query.split("&");
+                for (let i = 0; i < parts.length; i++) {
+                    const pair = parts[i].split("=");
+                    if (pair[0] === paramName) {
+                        return Number(pair[1]);
+                    }
+                }
+                return 0;
+            }
+
+            function calculateBill() {
+                const items = [
+                    "Pizza",
+                    "Cheese Pizza",
+                    "Burger",
+                    "Shawarma",
+                    "Biryani",
+                    "Fried Rice",
+                ];
+                const prices = [300.0, 350.0, 450.0, 80.0, 200.0, 100.0];
+                const keys = ["q1", "q2", "q3", "q4", "q5", "q6"];
+
+                let subtotal = 0;
+                let htmlOutput = "";
+                let hasItems = false;
+
+                for (let i = 0; i < items.length; i++) {
+                    let qty = getQueryValue(keys[i]);
+                    if (qty <= 0) {
+                        continue;
+                    }
+                    hasItems = true;
+                    let itemTotal = qty * prices[i];
+                    subtotal = subtotal + itemTotal;
+                    htmlOutput =
+                        htmlOutput +
+                        "<p>" +
+                        items[i] +
+                        " * " +
+                        qty +
+                        " = Rs" +
+                        itemTotal.toFixed(2) +
+                        "</p>";
+                }
+
+                if (!hasItems) {
+                    subtotal = 600.0;
+                    htmlOutput =
+                        "<p>Pizza * 2 (Default Sample Order) = Rs 600.00</p>";
+                }
+
+                if (document.getElementById("mayo").checked) {
+                    subtotal = subtotal + 50.0;
+                    htmlOutput = htmlOutput + "<p>Extra Sauce = Rs 50</p>";
+                }
+
+                if (document.getElementById("coupon").checked) {
+                    subtotal = subtotal - 150.0;
+                    if (subtotal < 0) {
+                        subtotal = 0;
+                    }
+                    htmlOutput =
+                        htmlOutput + "<p>Coupon Offer = - Rs 150.00</p>";
+                }
+
+                const gst = subtotal * 0.1;
+                const grandTotal = subtotal + gst;
+
+                document.getElementById("orderLines").innerHTML = htmlOutput;
+                document.getElementById("subtotalText").textContent =
+                    "Subtotal: Rs" + subtotal.toFixed(2);
+                document.getElementById("gstText").textContent =
+                    "GST (10%): Rs" + gst.toFixed(2);
+                document.getElementById("totalText").textContent =
+                    "Total Payable: Rs" + grandTotal.toFixed(2);
+            }
+
+            function placeOrder() {
+                document.getElementById("thankYouBox").style.display = "block";
+                alert("Thank you! Your order has been placed.");
+            }
+        </script>
+    </body>
+</html>

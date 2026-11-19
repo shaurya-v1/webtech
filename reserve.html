@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>BookMyTable - Table Reservation</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <header>
+            <h1>BookMyTable</h1>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">Login</a></li>
+                <li><a href="reserve.html">Reserve Table</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="checkout.html">Checkout</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <section>
+                <h2 class="center-text">TABLE RESERVATION</h2>
+                <form id="reserveForm" onreset="resetNotice()">
+                    <fieldset>
+                        <legend>Booking Details</legend>
+
+                        <p>
+                            <label for="guests">Number of Persons:</label>
+                            <select id="guests" name="guests">
+                                <option value="1">1 Person</option>
+                                <option value="2">2 Persons</option>
+                                <option value="3" selected>3 Persons</option>
+                                <option value="4">4 Persons</option>
+                                <option value="6">6 Persons</option>
+                            </select>
+                        </p>
+
+                        <p>
+                            <label for="resDate">Select Date:</label>
+                            <input
+                                type="date"
+                                id="resDate"
+                                name="resDate"
+                                required
+                            />
+                        </p>
+
+                        <p>
+                            <label>Select Time Slot:</label><br /><br />
+                            <input
+                                type="radio"
+                                id="time1"
+                                name="timeSlot"
+                                value="02:30 PM"
+                                checked
+                            />
+                            <label for="time1">02:30 PM</label>
+                            <input
+                                type="radio"
+                                id="time2"
+                                name="timeSlot"
+                                value="07:30 PM"
+                            />
+                            <label for="time2">07:30 PM</label>
+                            <input
+                                type="radio"
+                                id="time3"
+                                name="timeSlot"
+                                value="09:00 PM"
+                            />
+                            <label for="time3">09:00 PM</label>
+                        </p>
+
+                        <p>
+                            <label for="notes">Special Request:</label>
+                            <textarea
+                                id="notes"
+                                name="notes"
+                                rows="4"
+                                cols="35"
+                            >
+We would prefer a table by the window, if available. Thank you!</textarea>
+                        </p>
+
+                        <p>
+                            <label>Current Table Availability:</label><br />
+                            <meter value="0.7" min="0" max="1">70%</meter>
+                        </p>
+
+                        <div class="center-text">
+                            <input
+                                type="submit"
+                                value="Confirm Table & Go to Menu"
+                            />
+                            <input type="reset" value="Reset" />
+                        </div>
+                    </fieldset>
+                </form>
+
+                <div id="bookingConfirmation" class="summary-box">
+                    <p id="confirmText">
+                        Fill out the details above to reserve your table.
+                    </p>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>© 2026 BookMyTable. All rights reserved.</p>
+        </footer>
+
+        <script>
+            function resetNotice() {
+                alert("Reservation form was reset.");
+            }
+
+            document
+                .getElementById("reserveForm")
+                .addEventListener("submit", function (e) {
+                    e.preventDefault();
+
+                    const guests = document.getElementById("guests").value;
+                    const resDate = document.getElementById("resDate").value;
+                    const notes = document.getElementById("notes").value;
+
+                    let selectedTime = "02:30 PM";
+                    if (document.getElementById("time2").checked) {
+                        selectedTime = "07:30 PM";
+                    } else if (document.getElementById("time3").checked) {
+                        selectedTime = "09:00 PM";
+                    }
+
+                    if (resDate === "") {
+                        alert("Please select a reservation date.");
+                        return;
+                    }
+
+                    document.getElementById("confirmText").innerHTML =
+                        "<strong>Table Reserved!</strong><br>" +
+                        "Guests: " +
+                        guests +
+                        " Persons<br>" +
+                        "Date: " +
+                        resDate +
+                        "<br>" +
+                        "Time: " +
+                        selectedTime +
+                        "<br>" +
+                        "Note: " +
+                        notes +
+                        "<br><br>" +
+                        "<a href='menu.html' class='btn'>Proceed to Food Menu</a>";
+                });
+        </script>
+    </body>
+</html>

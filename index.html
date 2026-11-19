@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BookMyTable - Login</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .center-intro {
+            text-align: center;
+        }
+        form {
+            margin: auto;
+            text-align: left;
+        }
+        .submit-center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>BookMyTable</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Login</a></li>
+            <li><a href="reserve.html">Reserve Table</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="checkout.html">Checkout</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section>
+            <div class="center-intro">
+                <h2>Get Started</h2>
+                <p>Sign in with your details to reserve a table or order food.</p>
+            </div>
+
+            <form id="loginForm" novalidate>
+                <fieldset>
+                    <legend>Continue with Email or Mobile (+91)</legend>
+                    <p>
+                        <label for="email">Email Address:</label>
+                        <input type="text" id="email" name="email" placeholder="Enter your email" onfocus="highlightField(this)" onblur="resetField(this)">
+                        <small class="error-message"></small>
+                    </p>
+                    <p>
+                        <label for="phone">Mobile Number (+91):</label>
+                        <input type="text" id="phone" name="phone" placeholder="Enter 10-digit mobile number" onfocus="highlightField(this)" onblur="resetField(this)">
+                        <small class="error-message"></small>
+                    </p>
+                    <p>
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" placeholder="Enter password (min 6 chars)" onfocus="highlightField(this)" onblur="resetField(this)">
+                        <small class="error-message"></small>
+                    </p>
+                    <p>
+                        <input type="checkbox" id="agree" name="agree">
+                        <label for="agree">By continuing, you agree to our Terms & Conditions and Privacy Policy</label>
+                        <small class="error-message"></small>
+                    </p>
+                    <div class="submit-center">
+                        <input type="submit" value="Continue to Reserve Table">
+                    </div>
+                </fieldset>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 BookMyTable. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function highlightField(el) {
+            el.style.backgroundColor = "#f5f5f5";
+        }
+
+        function resetField(el) {
+            el.style.backgroundColor = "white";
+        }
+
+        function showError(fieldId, message) {
+            const inputField = document.getElementById(fieldId);
+            const errorTag = inputField.nextElementSibling;
+            errorTag.textContent = message;
+        }
+
+        document.getElementById("loginForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const errorMessages = document.querySelectorAll("small.error-message");
+            errorMessages.forEach(function (el) {
+                el.textContent = "";
+            });
+
+            const email = document.getElementById("email").value.trim();
+            const phone = document.getElementById("phone").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const agree = document.getElementById("agree").checked;
+
+            let isValid = true;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const phoneRegex = /^\d{10}$/;
+            const passwordRegex = /^.{6,}$/;
+
+            if (email === "") {
+                showError("email", "Email is required");
+                isValid = false;
+            } else if (!emailRegex.test(email)) {
+                showError("email", "Invalid email format");
+                isValid = false;
+            }
+
+            if (phone === "") {
+                showError("phone", "Mobile number is required");
+                isValid = false;
+            } else if (!phoneRegex.test(phone)) {
+                showError("phone", "Must be exactly 10 digits");
+                isValid = false;
+            }
+
+            if (password === "") {
+                showError("password", "Password is required");
+                isValid = false;
+            } else if (!passwordRegex.test(password)) {
+                showError("password", "Password must be at least 6 characters");
+                isValid = false;
+            }
+
+            if (!agree) {
+                showError("agree", "You must agree to the Terms & Conditions");
+                isValid = false;
+            }
+
+            if (isValid) {
+                alert("Login successful!");
+                window.location.href = "reserve.html";
+            }
+        });
+    </script>
+</body>
+</html>
