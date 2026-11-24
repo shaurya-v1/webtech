@@ -2,11 +2,13 @@
 $receiptMessage = "";
 $receiptReady = false;
 
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    $orderSummary = isset($_POST['order_summary']) ? $_POST['order_summary'] : "";
-    $subtotal = isset($_POST['subtotal']) ? $_POST['subtotal'] : "Rs0.00";
-    $gst = isset($_POST['gst']) ? $_POST['gst'] : "Rs0.00";
-    $total = isset($_POST['total']) ? $_POST['total'] : "Rs0.00";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $orderSummary = isset($_POST["order_summary"])
+        ? $_POST["order_summary"]
+        : "";
+    $subtotal = isset($_POST["subtotal"]) ? $_POST["subtotal"] : "Rs0.00";
+    $gst = isset($_POST["gst"]) ? $_POST["gst"] : "Rs0.00";
+    $total = isset($_POST["total"]) ? $_POST["total"] : "Rs0.00";
 
     $content = "BookMyTable - Order Receipt\n";
     $content = $content . "===========================\n";
@@ -53,8 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 <p><?php echo htmlspecialchars($receiptMessage); ?></p>
                 <?php if ($receiptReady && file_exists("receipt.txt")) { ?>
                     <p>
-                        <a href="receipt.txt" download="receipt.txt" class="btn">Download receipt.txt</a>
-                        <a href="receipt.txt" class="btn">View receipt.txt</a>
+                        <a href="receipt.txt" class="btn">Open receipt.txt</a>
                     </p>
                 <?php } ?>
                 <p>

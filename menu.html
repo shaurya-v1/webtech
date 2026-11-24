@@ -29,119 +29,137 @@
                     </p>
                 </div>
 
-                <div class="flex-container">
-                    <article class="menu-card">
-                        <div class="img-box">
-                            <img src="pizza1.jpg" alt="Pizza" />
-                        </div>
-                        <h3>Pizza - Rs 300.0</h3>
-                        <p>
-                            Classic wood-fired pizza topped with olives, and
-                            herbs.
-                        </p>
-                        <label for="qty1">Quantity:</label>
-                        <input
-                            type="number"
-                            id="qty1"
-                            min="0"
-                            max="10"
-                            value="0"
-                        />
-                    </article>
+                <form action="checkout.html" method="get" class="menu-form">
+                    <div class="flex-container">
+                        <article class="menu-card">
+                            <div class="img-box">
+                                <img src="pizza1.jpg" alt="Pizza" />
+                            </div>
+                            <h3>Pizza - Rs 300.0</h3>
+                            <p>
+                                Classic wood-fired pizza topped with olives, and
+                                herbs.
+                            </p>
+                            <label for="qty1">Quantity:</label>
+                            <input
+                                type="number"
+                                id="qty1"
+                                name="q1"
+                                min="0"
+                                max="10"
+                                value="0"
+                            />
+                        </article>
 
-                    <article class="menu-card">
-                        <div class="img-box">
-                            <img src="pizza2.jpg" alt="Cheese Pizza" />
-                        </div>
-                        <h3>Cheese Pizza - Rs 350.0</h3>
-                        <p>Crust loaded with Cheese and topped with chicken.</p>
-                        <label for="qty2">Quantity:</label>
-                        <input
-                            type="number"
-                            id="qty2"
-                            min="0"
-                            max="10"
-                            value="0"
-                        />
-                    </article>
+                        <article class="menu-card">
+                            <div class="img-box">
+                                <img src="pizza2.jpg" alt="Cheese Pizza" />
+                            </div>
+                            <h3>Cheese Pizza - Rs 350.0</h3>
+                            <p>
+                                Crust loaded with Cheese and topped with
+                                chicken.
+                            </p>
+                            <label for="qty2">Quantity:</label>
+                            <input
+                                type="number"
+                                id="qty2"
+                                name="q2"
+                                min="0"
+                                max="10"
+                                value="0"
+                            />
+                        </article>
 
-                    <article class="menu-card">
-                        <div class="img-box">
-                            <img src="burger.jpg" alt="Burger" />
-                        </div>
-                        <h3>Burger - Rs 450.0</h3>
-                        <p>
-                            Grilled burger with fresh lettuce, cheese, and
-                            chicken.
-                        </p>
-                        <label for="qty3">Quantity:</label>
-                        <input
-                            type="number"
-                            id="qty3"
-                            min="0"
-                            max="10"
-                            value="0"
-                        />
-                    </article>
+                        <article class="menu-card">
+                            <div class="img-box">
+                                <img src="burger.jpg" alt="Burger" />
+                            </div>
+                            <h3>Burger - Rs 450.0</h3>
+                            <p>
+                                Grilled burger with fresh lettuce, cheese, and
+                                chicken.
+                            </p>
+                            <label for="qty3">Quantity:</label>
+                            <input
+                                type="number"
+                                id="qty3"
+                                name="q3"
+                                min="0"
+                                max="10"
+                                value="0"
+                            />
+                        </article>
 
-                    <article class="menu-card">
-                        <div class="img-box">
-                            <img src="shawarma.jpg" alt="Shawarma" />
-                        </div>
-                        <h3>Shawarma - Rs 80.0</h3>
-                        <p>
-                            Spiced roasted meat wrapped in warm pita bread with
-                            garlic sauce and crisp veggies.
-                        </p>
-                        <label for="qty4">Quantity:</label>
-                        <input
-                            type="number"
-                            id="qty4"
-                            min="0"
-                            max="10"
-                            value="0"
-                        />
-                    </article>
+                        <article class="menu-card">
+                            <div class="img-box">
+                                <img src="shawarma.jpg" alt="Shawarma" />
+                            </div>
+                            <h3>Shawarma - Rs 80.0</h3>
+                            <p>
+                                Spiced roasted meat wrapped in warm pita bread
+                                with garlic sauce and crisp veggies.
+                            </p>
+                            <label for="qty4">Quantity:</label>
+                            <input
+                                type="number"
+                                id="qty4"
+                                name="q4"
+                                min="0"
+                                max="10"
+                                value="0"
+                            />
+                        </article>
 
-                    <article class="menu-card">
-                        <div class="img-box">
-                            <img src="biryani.jpg" alt="Biryani" />
-                        </div>
-                        <h3>Biryani - Rs 200.0</h3>
-                        <p>Aromatic spiced basmati rice with marinated meat.</p>
-                        <label for="qty5">Quantity:</label>
-                        <input
-                            type="number"
-                            id="qty5"
-                            min="0"
-                            max="10"
-                            value="0"
-                        />
-                    </article>
+                        <article class="menu-card">
+                            <div class="img-box">
+                                <img src="biryani.jpg" alt="Biryani" />
+                            </div>
+                            <h3>Biryani - Rs 200.0</h3>
+                            <p>
+                                Aromatic spiced basmati rice with marinated
+                                meat.
+                            </p>
+                            <label for="qty5">Quantity:</label>
+                            <input
+                                type="number"
+                                id="qty5"
+                                name="q5"
+                                min="0"
+                                max="10"
+                                value="0"
+                            />
+                        </article>
 
-                    <article class="menu-card">
-                        <div class="img-box">
-                            <img src="rice.jpg" alt="Fried Rice" />
-                        </div>
-                        <h3>Fried Rice - Rs 100.0</h3>
-                        <p>
-                            Wok-tossed rice with crunchy veggies, aromatic
-                            spices, and soy sauce.
-                        </p>
-                        <label for="qty6">Quantity:</label>
-                        <input
-                            type="number"
-                            id="qty6"
-                            min="0"
-                            max="10"
-                            value="0"
-                        />
-                    </article>
-                </div>
+                        <article class="menu-card">
+                            <div class="img-box">
+                                <img src="rice.jpg" alt="Fried Rice" />
+                            </div>
+                            <h3>Fried Rice - Rs 100.0</h3>
+                            <p>
+                                Wok-tossed rice with crunchy veggies, aromatic
+                                spices, and soy sauce.
+                            </p>
+                            <label for="qty6">Quantity:</label>
+                            <input
+                                type="number"
+                                id="qty6"
+                                name="q6"
+                                min="0"
+                                max="10"
+                                value="0"
+                            />
+                        </article>
+                    </div>
 
-                <div class="summary-box center-text">
-                    <a href="checkout.html" class="btn">Proceed to Checkout</a>
-                </div>
+                    <div class="summary-box center-text">
+                        <input
+                            type="submit"
+                            class="btn"
+                            value="Proceed to Checkout"
+                        />
+                    </div>
+                </form>
             </section>
         </main>
 
