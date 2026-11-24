@@ -22,6 +22,11 @@ if (loginForm) {
             el.textContent = "";
         });
 
+        const agreeBox = document.querySelector(".agree-box");
+        if (agreeBox) {
+            agreeBox.classList.remove("agree-error");
+        }
+
         const email = document.getElementById("email").value.trim();
         const phone = document.getElementById("phone").value.trim();
         const password = document.getElementById("password").value.trim();
@@ -58,12 +63,20 @@ if (loginForm) {
 
         if (!agree) {
             showError("agree", "You must agree to the Terms & Conditions");
+            if (agreeBox) {
+                agreeBox.classList.add("agree-error");
+            }
             isValid = false;
         }
 
         if (isValid) {
+            const loginQuery =
+                "email=" +
+                encodeURIComponent(email) +
+                "&phone=" +
+                encodeURIComponent(phone);
             alert("Login successful!");
-            window.location.href = "reserve.html";
+            window.location.href = "reserve.html?" + loginQuery;
         }
     });
 }
@@ -80,17 +93,36 @@ if (reserveForm) {
         const guests = document.getElementById("guests").value;
         const resDate = document.getElementById("resDate").value;
         const notes = document.getElementById("notes").value;
+        const email = getQueryText("email");
+        const phone = getQueryText("phone");
 
-        let selectedTime = "02:30 PM";
+        let selectedTime = "2 PM";
         if (document.getElementById("time2").checked) {
-            selectedTime = "07:30 PM";
+            selectedTime = "7 PM";
         } else if (document.getElementById("time3").checked) {
-            selectedTime = "09:00 PM";
+            selectedTime = "9 PM";
         }
 
         if (resDate === "") {
             alert("Please select a reservation date.");
             return;
+        }
+
+        let reserveQuery =
+            "guests=" +
+            encodeURIComponent(guests) +
+            "&resDate=" +
+            encodeURIComponent(resDate) +
+            "&timeSlot=" +
+            encodeURIComponent(selectedTime) +
+            "¬es=" +
+            encodeURIComponent(notes);
+
+        if (email !== "") {
+            reserveQuery = reserveQuery + "&email=" + encodeURIComponent(email);
+        }
+        if (phone !== "") {
+            reserveQuery = reserveQuery + "&phone=" + encodeURIComponent(phone);
         }
 
         document.getElementById("confirmText").innerHTML =
@@ -107,7 +139,12 @@ if (reserveForm) {
             "Note: " +
             notes +
             "<br><br>" +
-            "<a href='menu.html' class='btn'>Proceed to Food Menu</a>";
+            "<a href='menu.html?" +
+            reserveQuery +
+            "' class='btn'>Proceed to Food Menu</a> " +
+            "<a href='checkout.html?" +
+            reserveQuery +
+            "' class='btn'>Go to Checkout with Reservation</a>";
     });
 }
 
@@ -121,6 +158,40 @@ function getQueryValue(paramName) {
         }
     }
     return 0;
+}
+
+function getQueryText(paramName) {
+    const query = window.location.search.substring(1);
+    const parts = query.split("&");
+    for (let i = 0; i < parts.length; i++) {
+        const pair = parts[i].split("=");
+        if (pair[0] === paramName) {
+            return decodeURIComponent(pair[1].replace(/\+/g, " "));
+        }
+    }
+    return "";
+}
+
+const menuForm = document.querySelector(".menu-form");
+if (menuForm) {
+    const carryParams = [
+        "email",
+        "phone",
+        "guests",
+        "resDate",
+        "timeSlot",
+        "notes",
+    ];
+    for (let i = 0; i < carryParams.length; i++) {
+        const val = getQueryText(carryParams[i]);
+        if (val !== "") {
+            const hiddenInput = document.createElement("input");
+            hiddenInput.type = "hidden";
+            hiddenInput.name = carryParams[i];
+            hiddenInput.value = val;
+            menuForm.appendChild(hiddenInput);
+        }
+    }
 }
 
 function calculateBill() {
@@ -143,6 +214,33 @@ function calculateBill() {
     let htmlOutput = "";
     let hasItems = false;
 
+    const email = getQueryText("email");
+    const phone = getQueryText("phone");
+    const guests = getQueryText("guests");
+    const resDate = getQueryText("resDate");
+    const timeSlot = getQueryText("timeSlot");
+    const notes = getQueryText("notes");
+
+    if (email !== "" || phone !== "") {
+        htmlOutput =
+            htmlOutput + "<p>Customer: " + email + " | +91 " + phone + "</p>";
+    }
+
+    if (guests !== "" && resDate !== "") {
+        htmlOutput =
+            htmlOutput +
+            "<p>Table Reservation: " +
+            guests +
+            " Persons | " +
+            resDate +
+            " (" +
+            timeSlot +
+            ")</p>";
+        if (notes.trim() !== "") {
+            htmlOutput = htmlOutput + "<p>Note: " + notes.trim() + "</p>";
+        }
+    }
+
     for (let i = 0; i < items.length; i++) {
         let qty = getQueryValue(keys[i]);
         if (qty <= 0) {
@@ -164,7 +262,7 @@ function calculateBill() {
 
     if (!hasItems) {
         subtotal = 0;
-        htmlOutput = "<p>Nothing selected.</p>";
+        htmlOutput = htmlOutput + "<p>Nothing selected.</p>";
     }
 
     if (document.getElementById("mayo").checked) {
