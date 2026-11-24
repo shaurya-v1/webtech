@@ -224,6 +224,43 @@ function calculateBill() {
         "Total Payable: Rs " + grandTotal.toFixed(2);
 }
 
+function fillReceiptForm() {
+    const orderLinesEl = document.getElementById("orderLines");
+    const subtotalEl = document.getElementById("subtotalText");
+    const gstEl = document.getElementById("gstText");
+    const totalEl = document.getElementById("totalText");
+
+    if (!orderLinesEl || !subtotalEl || !gstEl || !totalEl) {
+        return;
+    }
+
+    const lines = Array.from(orderLinesEl.querySelectorAll("p"))
+        .map(function (p) {
+            return p.textContent;
+        })
+        .join("\n");
+
+    document.getElementById("orderSummaryInput").value = lines;
+    document.getElementById("subtotalInput").value =
+        subtotalEl.textContent.replace("Subtotal: ", "");
+    document.getElementById("gstInput").value = gstEl.textContent.replace(
+        "GST (10%): ",
+        "",
+    );
+    document.getElementById("totalInput").value = totalEl.textContent.replace(
+        "Total Payable: ",
+        "",
+    );
+}
+
+function submitReceiptForm() {
+    fillReceiptForm();
+    const receiptForm = document.getElementById("receiptForm");
+    if (receiptForm) {
+        receiptForm.submit();
+    }
+}
+
 function placeOrder() {
     fillReceiptForm();
     const thankYouBox = document.getElementById("thankYouBox");
