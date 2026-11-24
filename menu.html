@@ -140,9 +140,9 @@
                 </div>
 
                 <div class="summary-box center-text">
-                    <button type="button" class="btn" onclick="goToCheckout()">
-                        Proceed to Checkout
-                    </button>
+                    <a href="index.html" class="btn">Back to Login</a>
+                    <a href="reserve.html" class="btn">Reserve Table</a>
+                    <a href="checkout.html" class="btn">Proceed to Checkout</a>
                 </div>
             </section>
         </main>
@@ -151,30 +151,6 @@
             <p>© 2026 BookMyTable. All rights reserved.</p>
         </footer>
 
-        <script>
-            function goToCheckout() {
-                const q1 = document.getElementById("qty1").value;
-                const q2 = document.getElementById("qty2").value;
-                const q3 = document.getElementById("qty3").value;
-                const q4 = document.getElementById("qty4").value;
-                const q5 = document.getElementById("qty5").value;
-                const q6 = document.getElementById("qty6").value;
-
-                const query =
-                    "?q1=" +
-                    q1 +
-                    "&q2=" +
-                    q2 +
-                    "&q3=" +
-                    q3 +
-                    "&q4=" +
-                    q4 +
-                    "&q5=" +
-                    q5 +
-                    "&q6=" +
-                    q6;
-                window.location.href = "checkout.html" + query;
-            }
-        </script>
+        <script src="script.js"></script>
     </body>
 </html>

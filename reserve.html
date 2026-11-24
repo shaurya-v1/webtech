@@ -104,6 +104,12 @@ We would prefer a table by the window, if available. Thank you!</textarea>
                         Fill out the details above to reserve your table.
                     </p>
                 </div>
+
+                <div class="summary-box center-text">
+                    <a href="index.html" class="btn">Back to Login</a>
+                    <a href="menu.html" class="btn">Go to Menu</a>
+                    <a href="checkout.html" class="btn">Go to Checkout</a>
+                </div>
             </section>
         </main>
 
@@ -111,48 +117,6 @@ We would prefer a table by the window, if available. Thank you!</textarea>
             <p>© 2026 BookMyTable. All rights reserved.</p>
         </footer>
 
-        <script>
-            function resetNotice() {
-                alert("Reservation form was reset.");
-            }
-
-            document
-                .getElementById("reserveForm")
-                .addEventListener("submit", function (e) {
-                    e.preventDefault();
-
-                    const guests = document.getElementById("guests").value;
-                    const resDate = document.getElementById("resDate").value;
-                    const notes = document.getElementById("notes").value;
-
-                    let selectedTime = "02:30 PM";
-                    if (document.getElementById("time2").checked) {
-                        selectedTime = "07:30 PM";
-                    } else if (document.getElementById("time3").checked) {
-                        selectedTime = "09:00 PM";
-                    }
-
-                    if (resDate === "") {
-                        alert("Please select a reservation date.");
-                        return;
-                    }
-
-                    document.getElementById("confirmText").innerHTML =
-                        "<strong>Table Reserved!</strong><br>" +
-                        "Guests: " +
-                        guests +
-                        " Persons<br>" +
-                        "Date: " +
-                        resDate +
-                        "<br>" +
-                        "Time: " +
-                        selectedTime +
-                        "<br>" +
-                        "Note: " +
-                        notes +
-                        "<br><br>" +
-                        "<a href='menu.html' class='btn'>Proceed to Food Menu</a>";
-                });
-        </script>
+        <script src="script.js"></script>
     </body>
 </html>
