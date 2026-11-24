@@ -111,6 +111,28 @@ if (reserveForm) {
     });
 }
 
+const qtyIds = ["qty1", "qty2", "qty3", "qty4", "qty5", "qty6"];
+const hasMenuInputs = document.getElementById("qty1");
+
+if (hasMenuInputs) {
+    qtyIds.forEach(function (id) {
+        const inputEl = document.getElementById(id);
+        if (!inputEl) {
+            return;
+        }
+        const savedVal = localStorage.getItem(id);
+        if (savedVal !== null) {
+            inputEl.value = savedVal;
+        }
+        inputEl.addEventListener("change", function () {
+            localStorage.setItem(id, inputEl.value);
+        });
+        inputEl.addEventListener("input", function () {
+            localStorage.setItem(id, inputEl.value);
+        });
+    });
+}
+
 function getQueryValue(paramName) {
     const query = window.location.search.substring(1);
     const parts = query.split("&");
@@ -121,6 +143,17 @@ function getQueryValue(paramName) {
         }
     }
     return 0;
+}
+
+function getItemQty(index) {
+    const key = "q" + (index + 1);
+    const qtyId = "qty" + (index + 1);
+    const queryVal = getQueryValue(key);
+    if (queryVal > 0) {
+        return queryVal;
+    }
+    const storedVal = Number(localStorage.getItem(qtyId));
+    return storedVal > 0 ? storedVal : 0;
 }
 
 function calculateBill() {
@@ -137,14 +170,13 @@ function calculateBill() {
         "Fried Rice",
     ];
     const prices = [300.0, 350.0, 450.0, 80.0, 200.0, 100.0];
-    const keys = ["q1", "q2", "q3", "q4", "q5", "q6"];
 
     let subtotal = 0;
     let htmlOutput = "";
     let hasItems = false;
 
     for (let i = 0; i < items.length; i++) {
-        let qty = getQueryValue(keys[i]);
+        let qty = getItemQty(i);
         if (qty <= 0) {
             continue;
         }
@@ -185,14 +217,24 @@ function calculateBill() {
 
     document.getElementById("orderLines").innerHTML = htmlOutput;
     document.getElementById("subtotalText").textContent =
-        "Subtotal: Rs" + subtotal.toFixed(2);
+        "Subtotal: Rs " + subtotal.toFixed(2);
     document.getElementById("gstText").textContent =
-        "GST (10%): Rs" + gst.toFixed(2);
+        "GST (10%): Rs " + gst.toFixed(2);
     document.getElementById("totalText").textContent =
-        "Total Payable: Rs" + grandTotal.toFixed(2);
+        "Total Payable: Rs " + grandTotal.toFixed(2);
 }
 
 function placeOrder() {
-    document.getElementById("thankYouBox").style.display = "block";
-    alert("Thank you! Your order has been placed.");
+    fillReceiptForm();
+    const thankYouBox = document.getElementById("thankYouBox");
+    if (thankYouBox) {
+        thankYouBox.style.display = "block";
+    }
+
+    const receiptForm = document.getElementById("receiptForm");
+    if (receiptForm) {
+        setTimeout(function () {
+            receiptForm.submit();
+        }, 1500);
+    }
 }

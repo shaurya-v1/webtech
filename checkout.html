@@ -57,19 +57,40 @@
                     </button>
                 </div>
 
-                <div id="thankYouBox" class="summary-box" style="display: none">
+                <div
+                    id="thankYouBox"
+                    class="summary-box center-text"
+                    style="display: none"
+                >
                     <h2>THANK YOU!</h2>
                     <p>Your table and food order have been confirmed.</p>
                     <label>Generating Receipt:</label><br />
                     <progress></progress><br /><br />
+                    <button
+                        type="button"
+                        class="btn"
+                        onclick="submitReceiptForm()"
+                    >
+                        Download Receipt
+                    </button>
                     <a href="index.html" class="btn">Back to Home</a>
                 </div>
 
-                <div class="summary-box center-text">
-                    <a href="index.html" class="btn">Back to Login</a>
-                    <a href="reserve.html" class="btn">Reserve Table</a>
-                    <a href="menu.html" class="btn">Back to Menu</a>
-                </div>
+                <form
+                    id="receiptForm"
+                    action="server.php"
+                    method="post"
+                    style="display: none"
+                >
+                    <input
+                        type="hidden"
+                        id="orderSummaryInput"
+                        name="order_summary"
+                    />
+                    <input type="hidden" id="subtotalInput" name="subtotal" />
+                    <input type="hidden" id="gstInput" name="gst" />
+                    <input type="hidden" id="totalInput" name="total" />
+                </form>
             </section>
         </main>
 
